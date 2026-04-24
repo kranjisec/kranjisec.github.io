@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>S&T Farewell Letter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin:0;
+      min-height:100vh;
+      background:#181b20;
+      color:#c5c8c6;
+      font-family: Fira Mono, 'Consolas', monospace;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .container {
+      background: #23262b;
+      border-radius: 8px;
+      box-shadow: 0 8px 48px #000a;
+      padding: 2.2rem 2.8rem 2.2rem 2.2rem;
+      min-width: 342px;
+      width: 96vw;
+      max-width: 540px;
+      margin: 2rem 0;
+    }
+    h1 {
+      font-weight: 600;
+      font-size: 1.32rem;
+      margin: 0 0 0.7em 0;
+      letter-spacing: 0.04em;
+      color: #81e585;
+    }
+    h1 .info {
+      color: #ffa95c;
+      font-weight: 400;
+      font-size: 1rem;
+      margin-left: 8px;
+    }
+    .terminal {
+      width:100%;
+      margin: 0 0 1em 0;
+      min-height: 180px;
+      white-space: pre-wrap;
+    }
+    .line {
+      display: flex;
+      align-items: flex-start;
+      font-size: 1.06rem;
+      padding: 2px 0;
+      white-space: pre-line;
+    }
+    .prompt { color: #ff9e64; }
+    .path { color: #3ec8d5; }
+    .arrow { color: #c586c0; }
+    .typed-output {
+      margin-left: 2.2em;
+      color: #a4b7c7;
+      min-height: 1em;
+      white-space: pre-wrap;
+      font-family: inherit;
+    }
+    a { color: #81e585; border-bottom: 1px dotted #81e585; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .input-line {
+      display: flex;
+      align-items: center;
+      margin-top: 3px;
+    }
+    input[type=text] {
+      background: transparent;
+      color: inherit;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 1.07rem;
+      flex: 1 1 auto;
+      padding: 0;
+    }
+    @media(max-width:510px) {
+      .container { padding: 1em 0.3em 1.3em 0.7em; min-width:0; max-width:99vw;}
+      h1 { font-size:1.07rem }
+      .typed-output { font-size: 0.97rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>sec4s-2026:$ <span class="info">(type <b>show</b>)</span></h1>
+  <div id="terminal" class="terminal"></div>
+  <form id="command-form" autocomplete="off">
+    <div class="input-line">
+      <span class="prompt">λ</span>&nbsp;:: <span class="path">~</span> <span class="arrow">&gt;&gt;</span>
+      <input id="command-input" type="text" autofocus autocomplete="off" maxlength="80">
+    </div>
+  </form>
+</div>
+<script>
+const terminal = document.getElementById("terminal");
+const form = document.getElementById("command-form");
+const input = document.getElementById("command-input");
+
+// THE MESSAGE LINES TO TYPE OUT
+const messageLines = [
+`Dear Ishan (welp ur the representative of sec 4s S&T :pp),`,
+``,
+`We, the S&T Club 2026–2027, would like to apologise if our farewell celebration did not quite match those of the Student Council or other CCAs. While it may have been simple, it was sincerely planned with appreciation in mind.`,
+``,
+`More importantly, we want to express our heartfelt gratitude for everything you’ve contributed to the club over the past four years. Your dedication, effort, and presence have truly made a difference, and the impact you’ve left will not be forgotten.`,
+``,
+`Thank you for being such an important part of S&T. We wish you all the best in your future endeavours, and we hope you’ll look back on your time here with pride.`,
+``,
+`Warm regards,`,
+`S&T Club 2026–2027`
+];
+
+// Typing animation for multiple lines
+function typeLines(lines, lineIdx = 0) {
+  if(lineIdx >= lines.length) return;
+  const lineDiv = document.createElement("div");
+  lineDiv.className = "typed-output";
+  terminal.appendChild(lineDiv);
+
+  let idx = 0;
+  function typeChar() {
+    lineDiv.textContent = lines[lineIdx].slice(0, idx);
+    if (idx < lines[lineIdx].length) {
+      idx++;
+      setTimeout(typeChar, 28); // speed per letter
+    } else {
+      setTimeout(() => typeLines(lines, lineIdx + 1), 330); // after line done, next line
+    }
+    terminal.scrollTop = terminal.scrollHeight;
+  }
+  typeChar();
+}
+
+function appendLine(prompt, path, arrow, command, isInput) {
+  const line = document.createElement("div");
+  line.className = "line";
+  line.innerHTML = `<span class="prompt">${prompt}</span>&nbsp;:: <span class="path">${path}</span> <span class="arrow">${arrow}</span> ${command ? '<span>' + command + '</span>' : ''}`;
+  if (isInput) line.style.color="#fff";
+  terminal.appendChild(line);
+}
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const value = input.value.trim();
+  appendLine('λ', '~', '&gt;&gt;', value, true);
+  if (value.toLowerCase() === 'show') {
+    typeLines(messageLines);
+  } else {
+    // Optionally show an error: typeLines(['Unknown command. Try: show']);
+  }
+  input.value = "";
+  terminal.scrollTop = terminal.scrollHeight;
+});
+document.body.addEventListener("click", ()=> input.focus() );
+window.onload = ()=> input.focus();
+
+</script>
+</body>
+</html>
