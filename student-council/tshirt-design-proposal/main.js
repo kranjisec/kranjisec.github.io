@@ -1,0 +1,77 @@
+// main.js
+
+const container = document.getElementById('tshirt-viewer');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xf5f6f8);
+
+const camera = new THREE.PerspectiveCamera(28, container.offsetWidth/container.offsetHeight, 0.1, 100);
+camera.position.set(0, 1.2, 3);
+
+const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(container.offsetWidth, container.offsetHeight);
+container.appendChild(renderer.domElement);
+
+const ambient = new THREE.AmbientLight(0xffffff, 1.15);
+scene.add(ambient);
+const keyLight = new THREE.DirectionalLight(0xffffff, 0.7);
+keyLight.position.set(2, 3, 3);
+scene.add(keyLight);
+
+// Orbit Controls
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.enablePan = false;
+controls.maxPolarAngle = Math.PI / 1.8;
+
+let shirtMesh;
+
+// Load your front and back PNG designs
+const textureLoader = new THREE.TextureLoader();
+const frontTexture = textureLoader.load('logo_front.png');
+const backTexture = textureLoader.load('logo_back.png');
+
+// Red color hex (customize if you like)
+const redColor = 0xbf2026;
+
+const loader = new THREE.GLTFLoader();
+loader.load('polo.glb', function(gltf) {
+    shirtMesh = gltf.scene;
+    shirtMesh.traverse(child => {
+        if (child.isMesh) {
+            // Material logic
+            if (child.name.toLowerCase().includes('front')) {
+                child.material.map = frontTexture;
+            } else if (child.name.toLowerCase().includes('back')) {
+                child.material.map = backTexture;
+            } else {
+                child.material.map = frontTexture;
+            }
+            // ----- SET TO RED -----
+            child.material.color.setHex(redColor);
+            child.material.map.encoding = THREE.sRGBEncoding;
+            child.material.needsUpdate = true;
+        }
+    });
+    shirtMesh.scale.set(1.8, 1.8, 1.8);
+    scene.add(shirtMesh);
+}, undefined, function(error) {
+    console.error(error);
+});
+
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+}
+animate();
+
+// Responsive
+window.addEventListener('resize', () => {
+    const w = container.offsetWidth, h = container.offsetHeight;
+    camera.aspect = w/h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
