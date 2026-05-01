@@ -1193,7 +1193,6 @@ class GLTFMaterialsSpecularExtension {
 	}
 
 }
-
 /**
  * Materials anisotropy Extension
  *
