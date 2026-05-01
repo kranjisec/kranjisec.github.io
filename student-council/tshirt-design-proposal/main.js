@@ -18,8 +18,8 @@ const keyLight = new THREE.DirectionalLight(0xffffff, 0.7);
 keyLight.position.set(2, 3, 3);
 scene.add(keyLight);
 
-// Orbit Controls
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
+// Correct use: OrbitControls is global after including from the CDN!
+const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
 controls.enablePan = false;
@@ -27,37 +27,39 @@ controls.maxPolarAngle = Math.PI / 1.8;
 
 let shirtMesh;
 
-// Load your front and back PNG designs
+// Load your front and back PNG designs from the assets folder
 const textureLoader = new THREE.TextureLoader();
 const frontTexture = textureLoader.load('assets/Depan.png');
 const backTexture = textureLoader.load('assets/Belakang.png');
 
-// Red color hex (customize if you like)
-const redColor = 0xcd2525;
+// Red color hex for shirt body (customize if you want)
+const redColor = 0xbf2026;
 
+// Load and assign textures to polo shirt from the assets folder
 const loader = new THREE.GLTFLoader();
 loader.load('assets/polo.glb', function(gltf) {
     shirtMesh = gltf.scene;
-    shirtMesh.traverse(child => {
+
+    shirtMesh.traverse((child) => {
         if (child.isMesh) {
-            // Material logic
             if (child.name.toLowerCase().includes('front')) {
                 child.material.map = frontTexture;
             } else if (child.name.toLowerCase().includes('back')) {
                 child.material.map = backTexture;
             } else {
-                child.material.map = frontTexture;
+                child.material.map = frontTexture; // fallback to front
             }
-            // ----- SET TO RED -----
             child.material.color.setHex(redColor);
             child.material.map.encoding = THREE.sRGBEncoding;
             child.material.needsUpdate = true;
         }
     });
+
     shirtMesh.scale.set(1.8, 1.8, 1.8);
     scene.add(shirtMesh);
 }, undefined, function(error) {
-    console.error(error);
+    alert("Failed to load 3D model. Check the console for details.");
+    console.error("Model Load Error:", error);
 });
 
 // Animation loop
