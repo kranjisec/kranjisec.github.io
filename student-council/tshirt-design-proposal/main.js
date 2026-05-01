@@ -29,14 +29,14 @@ let shirtMesh;
 
 // Load your front and back PNG designs
 const textureLoader = new THREE.TextureLoader();
-const frontTexture = textureLoader.load('logo_front.png');
-const backTexture = textureLoader.load('logo_back.png');
+const frontTexture = textureLoader.load('assets/Depan.png');
+const backTexture = textureLoader.load('assets/Belakang.png');
 
 // Red color hex (customize if you like)
-const redColor = 0xbf2026;
+const redColor = 0xcd2525;
 
 const loader = new THREE.GLTFLoader();
-loader.load('polo.glb', function(gltf) {
+loader.load('assets/polo.glb', function(gltf) {
     shirtMesh = gltf.scene;
     shirtMesh.traverse(child => {
         if (child.isMesh) {
