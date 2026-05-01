@@ -1,6 +1,6 @@
-import * as THREE from 'https://unpkg.com/three@0.153.0/build/three.module.js';
-import { GLTFLoader } from 'https://unpkg.com/three@0.153.0/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'https://unpkg.com/three@0.153.0/examples/jsm/controls/OrbitControls.js';
+import * as THREE from './js/three.module.js';
+import { GLTFLoader } from './js/GLTFLoader.js';
+import { OrbitControls } from './js/OrbitControls.js';
 
 const container = document.getElementById('tshirt-viewer');
 const scene = new THREE.Scene();
@@ -29,13 +29,13 @@ controls.maxPolarAngle = Math.PI / 1.8;
 let shirtMesh;
 
 const textureLoader = new THREE.TextureLoader();
-const frontTexture = textureLoader.load('assets/Depan.png', undefined, undefined, handleTextureError);
-const backTexture = textureLoader.load('assets/Belakang.png', undefined, undefined, handleTextureError);
+const frontTexture = textureLoader.load('./assets/Depan.png', undefined, undefined, handleTextureError);
+const backTexture = textureLoader.load('./assets/Belakang.png', undefined, undefined, handleTextureError);
 
 const redColor = 0xcd2525;
 
 const loader = new GLTFLoader();
-loader.load('assets/polo.glb', function(gltf) {
+loader.load('./assets/polo.glb', function(gltf) {
     shirtMesh = gltf.scene;
 
     shirtMesh.traverse(child => {
