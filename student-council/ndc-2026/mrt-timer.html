@@ -3,24 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>Getaway Timer</title>
-    
-    <script>
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    </script>
+    <title>NDC MRT Timer</title>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap');
         
         :root {
-            --bg: #fdfdfd; --text: #0a0a0c; --card: #f1f1f4; --sep-color: rgba(0,0,0,0.15);
+            --bg: #8B0000; --text: #ffffff; --card: rgba(0,0,0,0.2); --sep-color: #ffffff;
             --digit-size: clamp(60px, 16vw, 30vh);
             --ease: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        [data-theme="dark"] { --bg: #08080a; --text: #ffffff; --card: #16161a; --sep-color: rgba(255,255,255,0.2); }
-        [data-theme="amoled"] { --bg: #000000; --text: #ffffff; --card: #111114; --sep-color: rgba(255,255,255,0.3); }
 
         * { 
             margin: 0; padding: 0; box-sizing: border-box; 
@@ -30,15 +22,18 @@
         }
 
         body {
-            background: var(--bg); color: var(--text); 
+            background: var(--bg);
+            color: var(--text); 
             height: 100dvh; display: flex; flex-direction: column; overflow: hidden;
-            transition: background 0.4s ease, color 0.4s ease;
             padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom);
         }
 
         /* UI ELEMENTS */
-        .top-nav { height: 65px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; flex-shrink: 0; padding: 0 10px; }
-        .icon-btn { width: 46px; height: 46px; border-radius: 50%; border: none; background: var(--card); color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+        .top-nav { height: 65px; display: flex; justify-content: center; align-items: center; z-index: 1000; flex-shrink: 0; padding: 0 10px; }
+        
+        .logo-placeholder { width: 60px; height: 60px; background-image: url('logo.png'); background-size: contain; background-repeat: no-repeat; background-position: center; }
+        
+        .icon-btn { width: 46px; height: 46px; border-radius: 50%; border: none; background: var(--card); color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
         .icon-btn:active { transform: scale(0.9); }
 
         /* CLOCK AREA */
@@ -48,7 +43,7 @@
         .digit { font-size: var(--digit-size); font-weight: 700; line-height: 1; transition: transform 0.4s var(--ease), opacity 0.2s; }
         .separator { font-size: calc(var(--digit-size) * 0.7); color: var(--sep-color); font-weight: 700; line-height: 1; }
         
-        .sec-group { display: none; align-items: baseline; opacity: 0.5; }
+        .sec-group { display: none; align-items: baseline; opacity: 0.7; }
         .sec-group .digit-box { height: calc(var(--digit-size) * 0.6); width: calc(var(--digit-size) * 0.38); }
         .sec-group .digit { font-size: calc(var(--digit-size) * 0.6); }
 
@@ -67,10 +62,11 @@
         /* DOCK */
         .dock { width: 100%; max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; padding-bottom: 20px; }
         .segmented { background: var(--card); padding: 5px; border-radius: 100px; display: flex; }
-        .seg-btn { flex: 1; border: none; background: transparent; color: var(--text); padding: 12px; border-radius: 100px; font-weight: 700; opacity: 0.3; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
-        .seg-btn.active { background: var(--bg); opacity: 1; }
+        .seg-btn { flex: 1; border: none; background: transparent; color: var(--text); padding: 12px; border-radius: 100px; font-weight: 700; opacity: 0.3; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; }
+        .seg-btn.active { background: rgba(255,255,255,0.2); opacity: 1; }
         .btn-row { display: flex; gap: 10px; }
-        .btn { background: var(--card); color: var(--text); border: none; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; flex: 1; cursor: pointer; transition: 0.2s; }
+        .btn { background: var(--card); color: var(--text); border: none; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; flex: 1; cursor: pointer; transition: all 0.2s; }
+        .btn:active { transform: scale(0.95); }
         .btn-main { flex: 2; background: var(--text); color: var(--bg); }
 
         /* OVERLAYS */
@@ -79,19 +75,21 @@
         .overlay-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; }
         .counter-group { background: var(--card); padding: 25px 35px; border-radius: 35px; display: flex; align-items: center; gap: 15px; }
         .timer-input { background: transparent; border: none; color: var(--text); font-size: 4rem; font-weight: 700; width: 2.2ch; text-align: center; }
-        .step-btn { width: 52px; height: 52px; border: none; background: var(--bg); color: var(--text); border-radius: 18px; font-size: 1.4rem; cursor: pointer; touch-action: none; }
-        .confirm-btn { width: 100%; max-width: 300px; padding: 18px; border-radius: 100px; border: none; background: var(--text); color: var(--bg); font-weight: 700; margin-top: 40px; cursor: pointer; }
+        .step-btn { width: 52px; height: 52px; border: none; background: rgba(255,255,255,0.15); color: var(--text); border-radius: 18px; font-size: 1.4rem; cursor: pointer; touch-action: none; transition: all 0.2s; }
+        .step-btn:active { transform: scale(0.9); }
+        .confirm-btn { width: 100%; max-width: 300px; padding: 18px; border-radius: 100px; border: none; background: var(--text); color: var(--bg); font-weight: 700; margin-top: 40px; cursor: pointer; transition: all 0.2s; }
+        .confirm-btn:active { transform: scale(0.95); }
 
         /* SETTINGS */
-        .setting-item { width: 100%; max-width: 360px; display: flex; justify-content: space-between; align-items: center; background: var(--card); padding: 20px 24px; border-radius: 24px; margin-bottom: 10px; }
+        .setting-item { width: 100%; max-width: 360px; display: flex; justify-content: space-between; align-items: center; background: var(--card); padding: 20px 24px; border-radius: 24px; margin-bottom: 15px; color: var(--text); }
         .toggle { width: 48px; height: 26px; position: relative; }
         .toggle input { opacity: 0; width: 0; }
-        .slider { position: absolute; inset: 0; background: rgba(128,128,128,0.2); border-radius: 34px; transition: 0.3s; cursor: pointer; }
+        .slider { position: absolute; inset: 0; background: rgba(255,255,255,0.2); border-radius: 34px; transition: 0.3s; cursor: pointer; }
         .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.3s; }
         input:checked + .slider { background: #34c759; }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        #toast { position: fixed; top: 30px; left: 50%; transform: translate(-50%, -20px); background: var(--text); color: var(--bg); padding: 12px 24px; border-radius: 100px; font-weight: 700; opacity: 0; transition: 0.4s var(--ease); z-index: 5000; font-size: 0.85rem; pointer-events: none; }
+        #toast { position: fixed; top: 30px; left: 50%; transform: translate(-50%, -20px); background: var(--text); color: var(--bg); padding: 12px 24px; border-radius: 100px; font-weight: 700; opacity: 0; transition: 0.3s; z-index: 4000; }
         #toast.show { opacity: 1; transform: translate(-50%, 0); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -100,14 +98,10 @@
 </head>
 <body onclick="handleGlobalClick(event)">
 
-    <div id="toast">THEME UPDATED</div>
+    <div id="toast">TIMER DONE!</div>
 
     <nav class="top-nav">
-        <button class="icon-btn" onclick="toggleFS()"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
-        <div style="display:flex; gap:10px;">
-            <button class="icon-btn" id="gear-btn" onclick="openModal('settings-panel')"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
-            <button class="icon-btn" onclick="toggleTheme()"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
-        </div>
+        <div class="logo-placeholder"></div>
     </nav>
 
     <main class="stage" id="main-stage">
@@ -173,9 +167,12 @@
         </div>
     </div>
 
+    <audio id="timer-sound">
+        <source src="./assets/timer-done.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
         let app = { timer: 0, mode: 'timer', left: 0, active: false, s_sec: true, s_ampm: false, h_int: null };
-        const chime = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
 
         window.onload = () => {
             app.s_sec = localStorage.getItem('s_sec') !== 'false';
@@ -217,7 +214,8 @@
                 if (app.active && app.left > 0) {
                     app.left--;
                     if (app.left === 0) { 
-                        app.active = false; updateIcon(); chime.play().catch(()=>{});
+                        app.active = false; updateIcon(); 
+                        playTimerSound();
                         showToast("TIMER DONE!");
                     }
                 }
@@ -261,7 +259,6 @@
             app.mode = m; app.active = false;
             document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(m[0]+'-tab').classList.add('active');
-            document.getElementById('gear-btn').style.visibility = (m==='clock') ? 'visible' : 'hidden';
             document.getElementById('timer-ctrl').style.visibility = (m==='clock') ? 'hidden' : 'visible';
             resetTimer();
         }
@@ -292,13 +289,10 @@
             localStorage.setItem('s_ampm', app.s_ampm);
         }
 
-        function toggleTheme() {
-            const themes = ['light', 'dark', 'amoled'];
-            const cur = document.documentElement.getAttribute('data-theme');
-            const next = themes[(themes.indexOf(cur) + 1) % themes.length];
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            showToast(`${next.toUpperCase()} THEME`);
+        function playTimerSound() {
+            const audio = document.getElementById('timer-sound');
+            audio.currentTime = 0;
+            audio.play().catch(err => console.log('Audio play failed:', err));
         }
 
         function showToast(m) {
