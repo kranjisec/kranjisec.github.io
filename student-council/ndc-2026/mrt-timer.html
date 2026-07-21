@@ -184,9 +184,7 @@
         };
 
         function handleGlobalClick(e) {
-           
             if (e.target.closest('.stage')) {
-                
                 if (window.innerHeight < 500) {
                     toggleTimer();
                 }
@@ -214,13 +212,20 @@
                 if (app.active && app.left > 0) {
                     app.left--;
                     if (app.left === 0) { 
-                        app.active = false; updateIcon(); 
+                        app.active = false; 
+                        updateIcon(); 
                         playTimerSound();
                         showToast("TIMER DONE!");
                     }
                 }
-                if (app.left >= 3600) { h = Math.floor(app.left/3600); m = Math.floor((app.left%3600)/60); isPomoHour=true; }
-                else { h = Math.floor(app.left/60); m = app.left%60; }
+                if (app.left >= 3600) { 
+                    h = Math.floor(app.left/3600); 
+                    m = Math.floor((app.left%3600)/60); 
+                    isPomoHour=true; 
+                } else { 
+                    h = Math.floor(app.left/60); 
+                    m = app.left%60; 
+                }
                 s = app.left % 60;
                 document.getElementById('ampm').style.display = 'none';
                 document.getElementById('c-sec').style.display = 'none';
@@ -244,43 +249,76 @@
             ids.forEach((id, i) => {
                 const el = document.getElementById(id);
                 if (el && el.textContent != map[i]) {
-                    el.style.transform = 'translateY(100%)'; el.style.opacity = '0';
+                    el.style.transform = 'translateY(100%)'; 
+                    el.style.opacity = '0';
                     setTimeout(() => {
-                        el.textContent = map[i]; el.style.transition = 'none';
-                        el.style.transform = 'translateY(-100%)'; el.offsetHeight; 
+                        el.textContent = map[i]; 
+                        el.style.transition = 'none';
+                        el.style.transform = 'translateY(-100%)'; 
+                        el.offsetHeight; 
                         el.style.transition = 'transform 0.4s var(--ease), opacity 0.2s';
-                        el.style.transform = 'translateY(0)'; el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)'; 
+                        el.style.opacity = '1';
                     }, 50);
                 }
             });
         }
 
         function setMode(m) {
-            app.mode = m; app.active = false;
+            app.mode = m; 
+            app.active = false;
             document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(m[0]+'-tab').classList.add('active');
             document.getElementById('timer-ctrl').style.visibility = (m==='clock') ? 'hidden' : 'visible';
             resetTimer();
         }
 
-        function resetTimer() { app.left = app.timer; app.active = false; updateIcon(); tick(); }
-        function toggleTimer() { app.active = !app.active; updateIcon(); }
-        function updateIcon() { document.getElementById('play-icon').innerHTML = app.active ? '<path d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor"/>' : '<path d="M5 3l14 9-14 9V3z" fill="currentColor"/>'; }
+        function resetTimer() { 
+            app.left = app.timer; 
+            app.active = false; 
+            updateIcon(); 
+            tick(); 
+        }
         
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function toggleTimer() { 
+            app.active = !app.active; 
+            updateIcon(); 
+        }
+        
+        function updateIcon() { 
+            document.getElementById('play-icon').innerHTML = app.active ? '<path d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor"/>' : '<path d="M5 3l14 9-14 9V3z" fill="currentColor"/>'; 
+        }
+        
+        function openModal(id) { 
+            document.getElementById(id).style.display = 'flex'; 
+        }
+        
+        function closeModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+        }
         
         function saveEdit() {
-            app.timer = (parseInt(document.getElementById('h-in').value) || 0) * 3600 + (parseInt(document.getElementById('m-in').value) || 0) * 60 + (parseInt(document.getElementById('s-in').value) || 0);
-            closeModal('edit-panel'); resetTimer();
+            const h = parseInt(document.getElementById('h-in').value) || 0;
+            const m = parseInt(document.getElementById('m-in').value) || 0;
+            const s = parseInt(document.getElementById('s-in').value) || 0;
+            app.timer = h * 3600 + m * 60 + s;
+            closeModal('edit-panel'); 
+            resetTimer();
         }
 
         function hold(e, id, d) {
             clearInterval(app.h_int);
-            const step = () => { let i = document.getElementById(id); i.value = Math.max(0, parseInt(i.value)+d); };
-            step(); app.h_int = setInterval(step, 150);
+            const step = () => { 
+                let i = document.getElementById(id); 
+                i.value = Math.max(0, parseInt(i.value)+d); 
+            };
+            step(); 
+            app.h_int = setInterval(step, 150);
         }
-        function stopHold() { clearInterval(app.h_int); }
+        
+        function stopHold() { 
+            clearInterval(app.h_int); 
+        }
 
         function syncPrefs() {
             app.s_sec = document.getElementById('tog-sec').checked;
@@ -296,8 +334,10 @@
         }
 
         function showToast(m) {
-            const t = document.getElementById('toast'); t.textContent = m;
-            t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 2000);
+            const t = document.getElementById('toast'); 
+            t.textContent = m;
+            t.classList.add('show'); 
+            setTimeout(()=>t.classList.remove('show'), 2000);
         }
     </script>
 </body>
