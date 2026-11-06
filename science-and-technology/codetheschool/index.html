@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4eedf">
+  <title>Code to School</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23294d58'/%3E%3Cpath d='M26 43h12l2-17H24l2 17Z' fill='%23f3c64e' stroke='%23f7e8c4' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M27 26a4 4 0 0 1 8 0' fill='none' stroke='%23f7e8c4' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='45' r='3.5' fill='%23f7e8c4'/%3E%3Cpath d='M22 19l8-6 12 8' fill='none' stroke='%23d8674e' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-bell" viewBox="0 0 24 24">
+      <path d="M7.4 17.2h9.2l-1.2-2.3v-3.1a3.4 3.4 0 0 0-6.8 0v3.1l-1.2 2.3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M10.4 19.2a1.7 1.7 0 0 0 3.2 0M12 5.8V3.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-school" viewBox="0 0 24 24">
+      <path d="M3.5 10.2 12 4l8.5 6.2v9.3h-17v-9.3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M2 10.7 12 3l10 7.7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M9.5 19.5v-5h5v5M6.4 12.2h2.2M15.4 12.2h2.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 3V1.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24">
+      <rect x="4" y="4" width="6" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <rect x="14" y="4" width="6" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <rect x="4" y="14" width="6" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <rect x="14" y="14" width="6" height="6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    </symbol>
+    <symbol id="i-book" viewBox="0 0 24 24">
+      <path d="M4.5 5.5A2.5 2.5 0 0 1 7 3h5v17H7a2.5 2.5 0 0 0-2.5 2V5.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M19.5 5.5A2.5 2.5 0 0 0 17 3h-5v17h5a2.5 2.5 0 0 1 2.5 2V5.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-play" viewBox="0 0 24 24">
+      <path d="m8.5 5.7 9.2 5.6c.7.4.7 1.4 0 1.8l-9.2 5.6c-.7.4-1.5-.1-1.5-.9V6.6c0-.8.8-1.3 1.5-.9Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24">
+      <rect x="6.5" y="6.5" width="11" height="11" rx="2.2" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24">
+      <path d="M5 9a7.5 7.5 0 1 1-.2 6.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+      <path d="M4.4 4.8v5.4h5.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24">
+      <path d="M8.4 15.2c-1.3-1.2-2.1-2.9-2.1-4.7a5.7 5.7 0 0 1 11.4 0c0 1.8-.8 3.5-2.1 4.7-.6.5-.9 1.1-.9 1.8H9.3c0-.7-.3-1.3-.9-1.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M9.6 20h4.8M10.2 17.4h3.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <path d="m5.5 12.5 4.1 4.1 8.9-9.3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24">
+      <path d="M19 12H5m0 0 5.2-5.2M5 12l5.2 5.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24">
+      <path d="M5 12h14m0 0-5.2-5.2M19 12l-5.2 5.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-close" viewBox="0 0 24 24">
+      <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24">
+      <path d="M12 3.2 13.8 9l5.8 1.8-5.8 1.9L12 18.4l-1.8-5.7L4.4 10.8 10.2 9 12 3.2Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-code" viewBox="0 0 24 24">
+      <path d="m8.5 8.5-4 3.5 4 3.5M15.5 8.5l4 3.5-4 3.5M13.5 5l-3 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <header class="topbar">
+    <button class="brand" id="brandBtn" type="button" aria-label="Go to the first lesson">
+		<span class="brand-mark">
+		  <img src="./assets/kranji-logo.png" width="30" height="21.27">
+		</span>
+		<span class="brand-copy">
+        <span class="brand-name">code <em>to</em> school</span>
+        <span class="brand-tagline">Kranji S&T Club</span>
+      </span>
+    </button>
+
+    <div class="chapter-pill" id="chapterPill">The School Run · 3 lessons</div>
+
+    <div class="topbar-actions">
+      <div class="progress-cluster" aria-label="Learning progress">
+        <div class="progress-copy"><span>Lessons done</span><strong id="progressText">0 / 3</strong></div>
+        <div class="progress-track" role="progressbar" aria-label="Lessons done" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressBar"></span></div>
+      </div>
+      <button class="btn btn-ghost" id="missionsBtn" type="button" aria-label="Lessons">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"/></svg>
+        <span>Lessons</span>
+      </button>
+      <button class="icon-btn" id="guideBtn" type="button" aria-label="Open the pocket guide" title="Pocket guide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="panel mission-panel" aria-labelledby="missionTitle">
+      <div class="mission-meta">
+        <span class="eyebrow" id="missionChapter">The school run</span>
+        <span class="mission-index" id="missionIndex">Lesson 01 of 03</span>
+      </div>
+      <h1 id="missionTitle">First Bell</h1>
+      <p class="mission-intro" id="missionIntro"></p>
+
+      <div class="goal-card">
+        <div class="section-label"><svg viewBox="0 0 24 24"><use href="#i-school"/></svg> Today's route</div>
+        <div class="goal-row" id="goalSchool">
+          <span class="goal-check"></span>
+          <span class="goal-text">Find your way to school</span>
+          <span class="goal-count" id="goalSchoolCount">5 to go</span>
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <div class="concept-head">
+          <span class="section-label">New idea</span>
+          <span class="concept-name" id="conceptTitle">Commands</span>
+        </div>
+        <p id="conceptDescription"></p>
+        <pre class="concept-snippet" id="conceptSnippet"></pre>
+      </div>
+
+      <div class="hint-box">
+        <button class="hint-toggle" id="hintBtn" type="button" aria-expanded="false" aria-controls="hintBody">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bulb"/></svg>
+          <span>Need a hint?</span>
+          <span class="hint-plus" aria-hidden="true">+</span>
+        </button>
+        <div class="hint-body" id="hintBody" hidden><p id="hintText"></p></div>
+      </div>
+
+      <div class="mission-nav">
+        <button class="btn btn-quiet" id="prevBtn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-left"/></svg>
+          <span>Back</span>
+        </button>
+        <button class="btn btn-quiet next-mission" id="nextBtn" type="button">
+          <span>Next</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <section class="panel stage-panel" aria-label="Your school route">
+      <header class="stage-head">
+        <div>
+          <span class="stage-kicker">Your route</span>
+          <h2 id="fieldName">Maple Street</h2>
+        </div>
+        <div class="stage-stats">
+          <div class="stat-chip school-chip" id="schoolChip" title="Distance to school">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-school"/></svg>
+            <span id="schoolStat">5 blocks</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="stage-body">
+        <div class="field-frame">
+          <div class="field-board" id="board">
+            <div class="board-grid" id="boardGrid" aria-hidden="true"></div>
+            <div class="milo" id="milo" aria-label="You, a student walking to school">
+              <span class="milo-shadow"></span>
+              <div class="milo-rotor" id="miloRotor">
+                <svg viewBox="0 0 40 46" aria-hidden="true">
+                  <rect x="9" y="28" width="22" height="13" rx="5.4" fill="#d8674e" stroke="#294d58" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M12.5 31.5h15M15 38.5h10" fill="none" stroke="#a94839" stroke-width="1.3" stroke-linecap="round" opacity=".75"/>
+                  <path d="M11.2 21.2v7M28.8 21.2v7" fill="none" stroke="#f2b98d" stroke-width="3.4" stroke-linecap="round"/>
+                  <rect x="11" y="18" width="18" height="14" rx="5.6" fill="#f7f1de" stroke="#294d58" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M15.6 18.5c.9 3.4.9 6.7 0 10M24.4 18.5c-.9 3.4-.9 6.7 0 10" fill="none" stroke="#d7cbb5" stroke-width="1.3" stroke-linecap="round"/>
+                  <path d="M14.2 42.3h4.6M21.2 42.3h4.6" stroke="#294d58" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="20" cy="12" r="7.3" fill="#f2b98d" stroke="#294d58" stroke-width="2"/>
+                  <path d="M12.9 11.2a7.1 7.1 0 0 1 14.2 0c-2.2 1.4-4.6 2.1-7.1 2.1s-4.9-.7-7.1-2.1Z" fill="#4f86a8" stroke="#294d58" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M11.4 7.6c1.6-3 4.6-4.8 8.6-4.8s7 1.8 8.6 4.8c-2.6 1.2-5.5 1.8-8.6 1.8s-6-.6-8.6-1.8Z" fill="#5f9cc0" stroke="#294d58" stroke-width="1.8" stroke-linejoin="round"/>
+                  <circle cx="20" cy="2.7" r="1.7" fill="#f3c64e" stroke="#294d58" stroke-width="1"/>
+                  <path d="M13.2 40v-3.6M26.8 40v-3.6" stroke="#f2b98d" stroke-width="3.2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="speech-bubble" id="speechBubble" hidden></div>
+            <div class="effects-layer" id="effects" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="stage-foot">
+          <div class="run-status">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="runStatus">Ready to run</span>
+          </div>
+          <div class="speed-switch" role="group" aria-label="Animation speed">
+            <span>Speed</span>
+            <button type="button" data-speed="1.3" class="is-active">1×</button>
+            <button type="button" data-speed="0.78">2×</button>
+            <button type="button" data-speed="0.45">4×</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel code-panel" aria-label="Code editor">
+      <header class="code-head">
+        <div class="file-tab">
+          <span class="file-dot"></span>
+          <span>main.py</span>
+          <span class="python-tag">Python</span>
+        </div>
+        <div class="code-tools">
+          <button class="text-btn" id="starterBtn" type="button" title="Restore the starter code">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-reset"/></svg>
+            <span>Starter</span>
+          </button>
+          <button class="text-btn" id="guideBtn2" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg>
+            <span>Guide</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="editor-shell">
+        <div class="editor-gutter">
+          <div class="line-numbers" id="lineNumbers">1</div>
+        </div>
+        <div class="editor-main">
+          <pre class="highlight" id="highlight" aria-hidden="true"><code></code></pre>
+          <textarea id="editor" class="editor" spellcheck="false" wrap="off" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Python code editor"></textarea>
+        </div>
+      </div>
+
+      <div class="run-row">
+        <button class="btn btn-run" id="runBtn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-play"/></svg>
+          <span>Run code</span>
+          <kbd>⌘↵</kbd>
+        </button>
+        <button class="icon-btn reset-button" id="resetBtn" type="button" title="Reset You to the start" aria-label="Reset You to the start">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-reset"/></svg>
+        </button>
+        <span class="save-note" id="saveNote">saved locally</span>
+      </div>
+
+      <div class="console">
+        <div class="console-head">
+          <span>Console</span>
+          <span class="console-status" id="consoleStatus">ready</span>
+        </div>
+        <div class="console-body" id="consoleBody" role="log" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Missions -->
+  <div class="modal" id="missionsModal" hidden>
+    <div class="modal-backdrop" data-close="missionsModal"></div>
+    <section class="modal-card missions-card" role="dialog" aria-modal="true" aria-labelledby="missionsTitle">
+      <header class="modal-head">
+        <div>
+          <span class="eyebrow">The school run</span>
+          <h2 id="missionsTitle">Choose a lesson</h2>
+        </div>
+        <button class="icon-btn modal-close" type="button" data-close="missionsModal" aria-label="Close lessons">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </header>
+      <div class="missions-list" id="missionsList"></div>
+      <footer class="modal-foot">
+        <span id="missionsProgress">0 of 3 lessons complete</span>
+        <button class="link-btn" type="button" id="resetProgressBtn">Reset progress</button>
+      </footer>
+    </section>
+  </div>
+
+  <!-- Pocket guide -->
+  <div class="modal" id="guideModal" hidden>
+    <div class="modal-backdrop" data-close="guideModal"></div>
+    <section class="modal-card guide-card" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+      <header class="modal-head">
+        <div>
+          <span class="eyebrow">Pocket reference</span>
+          <h2 id="guideTitle">The pocket guide</h2>
+        </div>
+        <button class="icon-btn modal-close" type="button" data-close="guideModal" aria-label="Close pocket guide">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </header>
+      <div class="guide-body">
+        <section class="guide-section">
+          <h3>Your commands</h3>
+          <div class="command-grid">
+            <div class="command"><code>move_forward()</code><span>Walk one block forward.</span></div>
+            <div class="command"><code>turn_left()</code><span>Turn 90° left.</span></div>
+            <div class="command"><code>turn_right()</code><span>Turn 90° right.</span></div>
+            <div class="command"><code>say("hello")</code><span>Show a little message.</span></div>
+            <div class="command"><code>print(value)</code><span>Write a value to the console.</span></div>
+          </div>
+        </section>
+        <section class="guide-section">
+          <h3>Python patterns</h3>
+          <div class="pattern-list">
+            <div class="pattern">
+              <div class="pattern-head"><span>Repeat steps</span><span class="pattern-tag">for</span></div>
+              <pre><code>for i in range(8):
+    move_forward()</code></pre>
+            </div>
+            <div class="pattern">
+              <div class="pattern-head"><span>Turn, then walk</span><span class="pattern-tag">order</span></div>
+              <pre><code>turn_left()
+move_forward()
+move_forward()</code></pre>
+            </div>
+          </div>
+        </section>
+        <aside class="guide-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bulb"/></svg>
+          <p><strong>Small Python rules:</strong> commands need parentheses, indented loop steps use four spaces, comments start with <code>#</code>, and there are no semicolons. <code>range(8)</code> repeats a step eight times. You understand a friendly subset of Python.</p>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <!-- Success -->
+  <div class="modal" id="successModal" hidden>
+    <div class="modal-backdrop" data-close="successModal"></div>
+    <section class="modal-card success-card" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+      <div class="confetti-layer" id="confetti" aria-hidden="true"></div>
+      <div class="success-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-school"/></svg></div>
+      <span class="eyebrow" id="successEyebrow">Lesson cleared</span>
+      <h2 id="successTitle">Right on time.</h2>
+      <p class="success-copy" id="successText"></p>
+      <div class="success-stats">
+        <div><strong id="successBlocks">5</strong><span>blocks</span></div>
+        <div><strong id="successActions">6</strong><span>actions</span></div>
+        <div><strong id="successConcept">Commands</strong><span>idea used</span></div>
+      </div>
+      <div class="success-actions">
+        <button class="btn btn-primary" id="successNextBtn" type="button">Next lesson <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+        <button class="btn btn-quiet" id="successStayBtn" type="button">Stay here</button>
+      </div>
+      <span class="success-footnote" id="successFootnote"></span>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <noscript>
+    <div class="noscript">This little school run needs JavaScript to work. Please enable it and reload the page.</div>
+  </noscript>
+
+  <script src="js/levels.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
